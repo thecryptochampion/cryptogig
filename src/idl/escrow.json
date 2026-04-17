@@ -1,0 +1,115 @@
+{
+  "version": "0.1.0",
+  "name": "solana_freelance_escrow",
+  "instructions": [
+    {
+      "name": "createEscrow",
+      "accounts": [
+        { "name": "client", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "vault", "isMut": true, "isSigner": false },
+        { "name": "clientUsdcAccount", "isMut": true, "isSigner": false },
+        { "name": "usdcMint", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "rent", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "jobId", "type": "string" },
+        { "name": "amount", "type": "u64" },
+        { "name": "description", "type": "string" }
+      ]
+    },
+    {
+      "name": "acceptJob",
+      "accounts": [
+        { "name": "freelancer", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "releaseFunds",
+      "accounts": [
+        { "name": "client", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "vault", "isMut": true, "isSigner": false },
+        { "name": "freelancerUsdcAccount", "isMut": true, "isSigner": false },
+        { "name": "platformTreasury", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancelEscrow",
+      "accounts": [
+        { "name": "client", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "vault", "isMut": true, "isSigner": false },
+        { "name": "clientUsdcAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "raiseDispute",
+      "accounts": [
+        { "name": "caller", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false }
+      ],
+      "args": [
+        { "name": "reason", "type": "string" }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Escrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "jobId", "type": "string" },
+          { "name": "client", "type": "publicKey" },
+          { "name": "freelancer", "type": "publicKey" },
+          { "name": "amount", "type": "u64" },
+          { "name": "platformFee", "type": "u64" },
+          { "name": "description", "type": "string" },
+          { "name": "status", "type": { "defined": "EscrowStatus" } },
+          { "name": "bump", "type": "u8" },
+          { "name": "vaultBump", "type": "u8" },
+          { "name": "createdAt", "type": "i64" },
+          { "name": "acceptedAt", "type": "i64" },
+          { "name": "completedAt", "type": "i64" },
+          { "name": "disputeReason", "type": "string" }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "EscrowStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          { "name": "Open" },
+          { "name": "InProgress" },
+          { "name": "Completed" },
+          { "name": "Cancelled" },
+          { "name": "Disputed" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    { "code": 6000, "name": "InvalidAmount", "msg": "Amount must be greater than zero" },
+    { "code": 6001, "name": "JobIdTooLong", "msg": "Job ID too long (max 64 chars)" },
+    { "code": 6002, "name": "DescriptionTooLong", "msg": "Description too long (max 256 chars)" },
+    { "code": 6003, "name": "InvalidStatus", "msg": "Invalid escrow status for this operation" },
+    { "code": 6004, "name": "AlreadyAccepted", "msg": "Job already accepted by a freelancer" },
+    { "code": 6005, "name": "Unauthorized", "msg": "Unauthorized: caller is not the expected party" },
+    { "code": 6006, "name": "CannotCancel", "msg": "Cannot cancel: job is already in progress" }
+  ],
+  "metadata": {
+    "address": "FreeLanceEscrow11111111111111111111111111111"
+  }
+}
