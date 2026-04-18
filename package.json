@@ -2,17 +2,12 @@
   "name": "solana-freelance-marketplace",
   "version": "1.0.0",
   "private": true,
-  "browser": {
-    "crypto": false
-  },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-phantom": "^0.9.24",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
-    "@solana/wallet-adapter-solflare": "^0.6.28",
-    "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.91.8",
     "@solana/spl-token": "^0.4.6",
     "bn.js": "^5.2.1",
@@ -27,9 +22,9 @@
     "stream-browserify": "^3.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
   },
   "browserslist": {
     "production": [">0.2%", "not dead", "not op_mini all"],
@@ -39,6 +34,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/bn.js": "^5.1.5",
+    "react-app-rewired": "^2.2.1",
     "typescript": "^5.0.0"
   }
 }
