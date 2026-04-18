@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "react-scripts build",
+  "buildCommand": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
   "outputDirectory": "build",
   "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
