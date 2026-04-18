@@ -2,6 +2,9 @@
   "name": "solana-freelance-marketplace",
   "version": "1.0.0",
   "private": true,
+  "browser": {
+    "crypto": false
+  },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
     "@solana/wallet-adapter-base": "^0.9.23",
